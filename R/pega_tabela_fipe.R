@@ -51,7 +51,7 @@ pega_tabela_fipe<- function(dataset_com_modelos){
         encode = encode
       )
 
-    content(response ) %>%
+    httr::content(response ) %>%
       tibble::enframe() %>%
       tidyr::pivot_wider(names_from = "name",
                          values_from = "value") %>%

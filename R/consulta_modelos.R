@@ -49,6 +49,7 @@ consulta_modelos <- function(marca){
       purrr::pluck(1) %>%
       dplyr::tibble() %>%
       dplyr::mutate(cod_marca = marca_declarada) %>%
+      dplyr::tible() %>%
       janitor::clean_names() %>%
       dplyr::rename(modelo = label,
              cod_modelo = value)
