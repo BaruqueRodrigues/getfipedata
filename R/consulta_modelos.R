@@ -31,7 +31,7 @@ consulta_modelos <- function(marca){
         "POST",
         url,
         body = payload,
-        add_headers(
+        httr::add_headers(
           authority = 'veiculos.fipe.org.br',
           accept_language = 'pt-BR,pt;q=0.9,en;q=0.8',
           origin = 'https://veiculos.fipe.org.br',
@@ -39,9 +39,9 @@ consulta_modelos <- function(marca){
 
           user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36'
         ),
-        content_type("application/x-www-form-urlencoded"),
-        accept("application/json, text/javascript, */*; q=0.01"),
-        set_cookies(`ASP.NET_SessionId` = "v5jlch5rapx3dj3kxx1anuh2", `ROUTEID` = ".5"),
+        httr::content_type("application/x-www-form-urlencoded"),
+        httr::accept("application/json, text/javascript, */*; q=0.01"),
+        httr::set_cookies(`ASP.NET_SessionId` = "v5jlch5rapx3dj3kxx1anuh2", `ROUTEID` = ".5"),
         encode = encode
       )
 

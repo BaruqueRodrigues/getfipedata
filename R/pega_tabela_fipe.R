@@ -39,15 +39,15 @@ pega_tabela_fipe<- function(dataset_com_modelos){
         "POST",
         url,
         body = payload,
-        add_headers(
+        httr::add_headers(
           authority = 'veiculos.fipe.org.br',
           accept_language = 'pt-BR,pt;q=0.9,en;q=0.8',
           origin = 'https://veiculos.fipe.org.br',
           referer = 'https://veiculos.fipe.org.br/'
         ),
-        content_type("application/x-www-form-urlencoded"),
-        accept("application/json, text/javascript, */*; q=0.01"),
-        set_cookies(`ASP.NET_SessionId` = "v5jlch5rapx3dj3kxx1anuh2", `ROUTEID` = ".5"),
+        httr::content_type("application/x-www-form-urlencoded"),
+        httr::accept("application/json, text/javascript, */*; q=0.01"),
+        httr::set_cookies(`ASP.NET_SessionId` = "v5jlch5rapx3dj3kxx1anuh2", `ROUTEID` = ".5"),
         encode = encode
       )
 
