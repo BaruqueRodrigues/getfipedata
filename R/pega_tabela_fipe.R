@@ -8,7 +8,7 @@
 #' @examples
 
 pega_tabela_fipe<- function(dataset_com_modelos){
-
+  future::plan(future::multisession,workers = parallel::detectCores())
   tabela_fipe <- function(cod_marca,
                           cod_modelo,
                           ano_modelo,
@@ -61,7 +61,7 @@ pega_tabela_fipe<- function(dataset_com_modelos){
   }
 
 
-  purrr::pmap_dfr(dataset_com_modelos, tabela_fipe)
+  furrr::future_pmap_dfr(dataset_com_modelos, tabela_fipe)
 
 }
 

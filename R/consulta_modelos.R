@@ -8,8 +8,11 @@
 #' @examples
 #'
 consulta_modelos <- function(marca){
-
+  future::plan(future::multisession,workers = parallel::detectCores())
   funcao_pega_modelos<- function(marca_declarada = 22){
+
+
+
     url <- "https://veiculos.fipe.org.br/api/veiculos//ConsultarModelos"
 
     # payload <-
@@ -49,7 +52,7 @@ consulta_modelos <- function(marca){
       purrr::pluck(1) %>%
       dplyr::tibble() %>%
       dplyr::mutate(cod_marca = marca_declarada) %>%
-      dplyr::tible() %>%
+      dplyr::tibble() %>%
       janitor::clean_names() %>%
       dplyr::rename(modelo = label,
              cod_modelo = value)
@@ -57,7 +60,7 @@ consulta_modelos <- function(marca){
     df_veiculos
   }
 
-  df_veic<- purrr::map_dfr(marca, ~funcao_pega_modelos(
+  df_veic<- furrr::future_map_dfr(marca, ~funcao_pega_modelos(
                   marca_declarada = .x
   ))
 
