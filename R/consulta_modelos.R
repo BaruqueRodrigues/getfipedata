@@ -45,7 +45,7 @@ consulta_modelos <- function(marca){
         encode = encode
       )
 
-    df_veiculos <-content(response, simplifyDataFrame = TRUE) %>%
+    df_veiculos <- httr::content(response, simplifyDataFrame = TRUE) %>%
       purrr::pluck(1) %>%
       dplyr::tibble() %>%
       dplyr::mutate(cod_marca = marca_declarada) %>%
@@ -63,7 +63,7 @@ consulta_modelos <- function(marca){
 
   df_veic %>%
     janitor::clean_names() %>%
-    left_join(pega_ano_modelo(modelo = df_veic$cod_modelo,
+    dplyr::left_join(pega_ano_modelo(modelo = df_veic$cod_modelo,
                               codigo_marca = df_veic$cod_marca))
 }
 

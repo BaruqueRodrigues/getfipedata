@@ -63,7 +63,7 @@ pega_ano_modelo <- function(modelo, codigo_marca){
         cod_motor = value
       ) %>%
       dplyr::mutate(
-        ano_modelo = str_remove(cod_motor, "-.")
+        ano_modelo = stringr::str_remove(cod_motor, "-.")
       )
 
   }
