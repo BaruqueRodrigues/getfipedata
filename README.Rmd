@@ -1,0 +1,63 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# Instalando o pacote
+
+Como o pacote está apenas no github para baixar o pacote é necessário usar a função abaixo
+```{r, eval = FALSE}
+devtools::install_github("BaruqueRodrigues/getfipedata")
+```
+
+# Usando o pacote
+
+O primeiro passo para utilizar é carregar o pacote.
+```{r}
+library(getfipedata)
+```
+
+Em seguida pegamos o código do ano a ser consultado, possível pela função abaixo
+```{r}
+ano_modelos <- getfipedata::pega_cod_ano()
+
+ano_modelos
+```
+Use o código do mes desejado.
+
+O passo seguinte é pegar o código das marcas dos carros. A partir do código das marcas podemos construir o dataset dos modelos
+
+```{r}
+marcas_carros <- pega_marcas()
+marcas_carros
+```
+
+Agora usamos a função consulta modelos para indicar os modelos das marcas que desejamos. Aqui vamos pegar todos os modelos da BMW disponíveis na tabela fipe.
+
+```{r}
+df_modelos <- consulta_modelos(7)
+
+df_modelos
+```
+
+A partir do dataset com os modelos de carros inserimos na função pega tabela fipe, ele irá retornar o dataset abaixo.
+
+```{r}
+tabela_fipe_bmw <- pega_tabela_fipe(df_modelos %>% 
+                                      dplyr::slice(1:10))
+
+tabela_fipe_bmw %>% 
+  dplyr::glimpse()
+```
+
+
