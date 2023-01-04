@@ -1,6 +1,6 @@
 #' pega_marcas disponveis por titulo de veiculo na tabela fipe
 #'
-#' @param tipo_veiculo identificar o tipo de veiculo se 1, 2 ou 3
+#' @param tipo_veiculo identificar o tipo de veiculo se 1 carro, 2 caminhao ou 3 moto
 #'
 #' @return
 #' @export

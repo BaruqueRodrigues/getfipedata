@@ -1,15 +1,18 @@
 #' consulta os modelos disponiveis por marca da tabela fipe
 #'
-#' @param marca código da marca importada pela fun pega_marcas
+#' @param marca codigo da marca importada pela fun pega_marcas
+#' @param cod_ano cod do ano em que o valor deve ser baseado
 #'
 #' @return
 #' @export
 #'
 #' @examples
 #'
-consulta_modelos <- function(marca){
+consulta_modelos <- function(marca,
+                             cod_ano){
   future::plan(future::multisession,workers = parallel::detectCores())
-  funcao_pega_modelos<- function(marca_declarada = 22){
+  funcao_pega_modelos<- function(marca_declarada = marca,
+                                 cod_ano){
 
 
 
@@ -19,9 +22,10 @@ consulta_modelos <- function(marca){
     #   "codigoTipoVeiculo=1&codigoTabelaReferencia=292&codigoModelo=&codigoMarca=22&ano=&codigoTipoCombustivel=&anoModelo=&modeloCodigoExterno="
 
     payload <- paste0("codigoTipoVeiculo=1&codigoTabelaReferencia=",
-                      pega_cod_ano() %>%
-                        dplyr::slice(1) %>%
-                        dplyr::pull(codigo),
+                      # pega_cod_ano() %>%
+                      #   dplyr::slice(1) %>%
+                      #   dplyr::pull(codigo),
+                      cod_ano,
                       "&codigoModelo=&codigoMarca=",
                       marca_declarada,
                       "&ano=&codigoTipoCombustivel=&anoModelo=&modeloCodigoExterno="
@@ -51,7 +55,8 @@ consulta_modelos <- function(marca){
     df_veiculos <- httr::content(response, simplifyDataFrame = TRUE) %>%
       purrr::pluck(1) %>%
       dplyr::tibble() %>%
-      dplyr::mutate(cod_marca = marca_declarada) %>%
+      dplyr::mutate(cod_marca = marca_declarada,
+                    cod_ano = cod_ano) %>%
       dplyr::tibble() %>%
       janitor::clean_names() %>%
       dplyr::rename(modelo = label,
@@ -60,8 +65,11 @@ consulta_modelos <- function(marca){
     df_veiculos
   }
 
-  df_veic<- furrr::future_map_dfr(marca, ~funcao_pega_modelos(
-                  marca_declarada = .x
+  df_veic<- furrr::future_map2_dfr(marca,
+                                   cod_ano, ~funcao_pega_modelos(
+                  marca_declarada = .x,
+                  cod_ano = .y
+
   ))
 
 
