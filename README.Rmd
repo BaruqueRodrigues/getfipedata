@@ -13,51 +13,42 @@ knitr::opts_chunk$set(
 )
 ```
 
-# Instalando o pacote
+# getfipedata
 
-Como o pacote está apenas no github para baixar o pacote é necessário usar a função abaixo
-```{r, eval = FALSE}
-devtools::install_github("BaruqueRodrigues/getfipedata")
+<!-- badges: start -->
+<!-- badges: end -->
+
+The goal of getfipedata is to ...
+
+## Installation
+
+You can install the development version of getfipedata like so:
+
+``` r
+# FILL THIS IN! HOW CAN PEOPLE INSTALL YOUR DEV PACKAGE?
 ```
 
-# Usando o pacote
+## Example
 
-O primeiro passo para utilizar é carregar o pacote.
-```{r}
+This is a basic example which shows you how to solve a common problem:
+
+```{r example}
 library(getfipedata)
+## basic example code
 ```
 
-Em seguida pegamos o código do ano a ser consultado, possível pela função abaixo
-```{r}
-ano_modelos <- getfipedata::pega_cod_ano()
+What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
 
-ano_modelos
-```
-Use o código do mes desejado.
-
-O passo seguinte é pegar o código das marcas dos carros. A partir do código das marcas podemos construir o dataset dos modelos
-
-```{r}
-marcas_carros <- pega_marcas()
-marcas_carros
+```{r cars}
+summary(cars)
 ```
 
-Agora usamos a função consulta modelos para indicar os modelos das marcas que desejamos. Aqui vamos pegar todos os modelos da BMW disponíveis na tabela fipe.
+You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this. You could also use GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/v1/examples>.
 
-```{r}
-df_modelos <- consulta_modelos(7)
+You can also embed plots, for example:
 
-df_modelos
+```{r pressure, echo = FALSE}
+plot(pressure)
 ```
 
-A partir do dataset com os modelos de carros inserimos na função pega tabela fipe, ele irá retornar o dataset abaixo.
-
-```{r}
-tabela_fipe_bmw <- pega_tabela_fipe(df_modelos %>% 
-                                      dplyr::slice(1:10))
-
-tabela_fipe_bmw %>% 
-  dplyr::glimpse()
-```
-
-
+In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
